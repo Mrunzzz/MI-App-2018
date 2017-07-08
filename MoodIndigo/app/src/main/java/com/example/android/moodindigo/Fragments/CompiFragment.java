@@ -26,4 +26,3 @@ public class CompiFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_compi, container, false);
     }
 }
-

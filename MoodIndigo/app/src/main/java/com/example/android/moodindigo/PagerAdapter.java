@@ -1,10 +1,5 @@
 package com.example.android.moodindigo;
 
-/**
- * Created by owais on 04/07/17.
- */
-
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;

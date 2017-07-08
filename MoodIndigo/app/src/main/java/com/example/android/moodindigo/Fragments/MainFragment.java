@@ -15,8 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.Toolbar;
 import android.view.ViewParent;
-import com.example.android.moodindigo.PagerAdapter;
 import com.example.android.moodindigo.R;
+import com.example.android.moodindigo.PagerAdapter;
 
 /**
  * Created by owais on 05/07/17.
@@ -26,14 +26,10 @@ import com.example.android.moodindigo.R;
 
 
 public class MainFragment extends Fragment {
-//    public MainFragment() {
-//        // Required empty public constructor
-//    }
 
-    //Mrunmayi
     View view;
     ViewPager viewPager;
-    //Mrunmayi
+
     public MainFragment() {
         // Required empty public constructor
     }
@@ -45,8 +41,12 @@ public class MainFragment extends Fragment {
         container.removeAllViews();
         View view = inflater.inflate(R.layout.fragment_main, container,false);
 
-        //Mrunmayi
+
         view=inflater.inflate(R.layout.fragment_main, container, false);
+
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        toolbar.setTitle("MoodIndigo");
+
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         tabLayout.addTab(tabLayout.newTab().setText("News"));
         tabLayout.addTab(tabLayout.newTab().setText("Competitions"));
@@ -74,4 +74,3 @@ public class MainFragment extends Fragment {
     }
 
 }
-
