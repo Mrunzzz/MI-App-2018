@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">Mood Indigo</string>
+    <string name="app_name">MoodIndigoFragmentTab</string>
+    <string name="hello_blank_compi_fragment">Hello Blank Compi Fragment</string>
+    <string name="hello_blank_news_fragment">Hello Blank News Fragment</string>
+    <string name="hello_main_fragment">Hello Main Fragment</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
