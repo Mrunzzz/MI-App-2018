@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.android.moodindigo.Fragments.CompiFragment;
+import com.example.android.moodindigo.Fragments.FAQFragment;
 import com.example.android.moodindigo.Fragments.NewsFragment;
 
 /**
@@ -31,6 +32,9 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
             case 1:
                 NewsFragment newsFragment = new NewsFragment();
                 return newsFragment;
+            case 2:
+                FAQFragment faqFragment = new FAQFragment();
+                return faqFragment;
             default:
                 return null;
         }
