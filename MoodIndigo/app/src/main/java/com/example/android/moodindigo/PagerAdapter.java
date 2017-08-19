@@ -2,17 +2,18 @@ package com.example.android.moodindigo;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.android.moodindigo.Fragments.CompiFragment;
 import com.example.android.moodindigo.Fragments.FAQFragment;
-import com.example.android.moodindigo.Fragments.NewsFragment;
+import com.example.android.moodindigo.Fragments.NewzFragment;
 
 /**
  * Created by owais on 05/07/17.
  */
 
-public class PagerAdapter extends FragmentStatePagerAdapter {
+public class PagerAdapter extends FragmentPagerAdapter {
 
     int mNumOfTabs; // number of tab variable for viewPager
 
@@ -23,6 +24,10 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
+    public int getCount() {
+        return mNumOfTabs;
+    }
+    @Override
     public Fragment getItem(int position){
 
         switch (position){
@@ -30,8 +35,8 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 CompiFragment compiFragment = new CompiFragment();
                 return compiFragment;
             case 1:
-                NewsFragment newsFragment = new NewsFragment();
-                return newsFragment;
+                NewzFragment newzFragment = new NewzFragment();
+                return newzFragment;
             case 2:
                 FAQFragment faqFragment = new FAQFragment();
                 return faqFragment;
@@ -39,8 +44,5 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 return null;
         }
     }
-    @Override
-    public int getCount() {
-        return mNumOfTabs;
-    }
+
 }

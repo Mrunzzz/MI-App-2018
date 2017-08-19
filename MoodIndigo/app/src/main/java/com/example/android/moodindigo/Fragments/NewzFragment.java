@@ -12,12 +12,12 @@ import com.example.android.moodindigo.MyAdapter;
 import com.example.android.moodindigo.R;
 
 /**
- * Created by owais on 05/07/17.
+ * Created by owais on 19/08/17.
  */
 
-public class FAQFragment extends Fragment {
+public class NewzFragment extends Fragment {
     public View view;
-    public FAQFragment() {
+    public NewzFragment() {
         // Required empty public constructor
     }
     @Override
@@ -25,8 +25,6 @@ public class FAQFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -34,9 +32,9 @@ public class FAQFragment extends Fragment {
         //container.removeAllViews();
 
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_faq, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_newz, container, false);
 
-        RecyclerView rv = (RecyclerView) rootView.findViewById(R.id.recycler_view_faq);
+        RecyclerView rv = (RecyclerView) rootView.findViewById(R.id.recycler_view_news);
         rv.setHasFixedSize(true);
         MyAdapter adapter = new MyAdapter(new String[]{"Example One", "Example Two", "Example Three", "Example Four", "Example Five" , "Example Six" , "Example Seven"});
         rv.setAdapter(adapter);
@@ -47,7 +45,5 @@ public class FAQFragment extends Fragment {
         return rootView;
 
     }
-
-
 
 }
