@@ -32,5 +32,6 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="BASE_URL">api2.moodi.org</string>
 
 </resources>
