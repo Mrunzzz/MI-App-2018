@@ -1,7 +1,5 @@
 package com.example.android.moodindigo;
 
-import com.example.android.pracapp2.data.Book;
-import com.example.android.pracapp2.data.User;
 
 import java.util.List;
 
