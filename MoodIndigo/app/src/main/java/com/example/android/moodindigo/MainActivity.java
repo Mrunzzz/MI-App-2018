@@ -9,6 +9,8 @@ import android.provider.ContactsContract;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -24,6 +26,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.moodindigo.Fragments.AboutFragment;
+import com.example.android.moodindigo.Fragments.CompiFragment;
+import com.example.android.moodindigo.Fragments.ContactsFragment;
+import com.example.android.moodindigo.Fragments.DevelopersFragment;
+import com.example.android.moodindigo.Fragments.EventsFragment;
+import com.example.android.moodindigo.Fragments.LookbackFragment;
 import com.example.android.moodindigo.Fragments.MainFragment;
 import com.example.android.moodindigo.R;
 import com.facebook.FacebookSdk;
@@ -126,23 +134,40 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_faq) {
-            // Handle the camera action
-        } else if (id == R.id.nav_faq) {
+        if (id == R.id.nav_home) {
+            openFragment(new MainFragment(),"main");
 
-        } else if (id == R.id.nav_faq) {
+        } else if (id == R.id.nav_events) {
+            openFragment(new EventsFragment(),"events");
 
-        } else if (id == R.id.nav_faq) {
+        } else if (id == R.id.nav_lookback) {
+            openFragment(new LookbackFragment(),"lookback");
 
-        } else if (id == R.id.nav_faq) {
+        } else if (id == R.id.nav_about) {
+            openFragment(new AboutFragment(),"about");
 
-        } else if (id == R.id.nav_faq) {
+        } else if (id == R.id.nav_settings) {
 
+
+        } else if (id == R.id.nav_contacts) {
+            openFragment(new ContactsFragment(),"contacts");
+
+        }
+        else if (id == R.id.nav_developers) {
+            openFragment(new DevelopersFragment(),"developers");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void openFragment(Fragment fragment,String string)
+    {
+        FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.relative_layout_for_main_fragment_news_fragments,fragment);
+        ft.addToBackStack(string);
+        ft.commit();
     }
 
 
