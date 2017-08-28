@@ -1,10 +1,14 @@
 package com.example.android.moodindigo;
 
 
+import com.example.android.moodindigo.data.RegistrationRequest;
+import com.example.android.moodindigo.data.RegistrationResponse;
+
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -21,8 +25,13 @@ public interface SearchInterface {
 //    Call<List<E>> getNews();
 //
 //
-//    @GET("user/{id}")
-//    Call<List<E>> checkUserDetails(@Path("id") int id);
+    @GET("user/{id}")
+    Call<RegistrationResponse> checkUserDetails(@Path("id") long id);
+
+    @POST("user/create")
+    Call<RegistrationResponse> fillRegistrationForm(RegistrationRequest registrationRequest);
+
+
 
 
 }

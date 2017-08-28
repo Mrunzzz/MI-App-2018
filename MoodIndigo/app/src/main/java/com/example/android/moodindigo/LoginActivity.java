@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.android.moodindigo.Fragments.MainFragment;
+import com.example.android.moodindigo.data.RegistrationResponse;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -27,6 +28,8 @@ import java.security.Signature;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -35,6 +38,8 @@ public class LoginActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
     private AccessTokenTracker accessTokenTracker;
     private ProfileTracker profileTracker;
+    RetrofitClass rcinitiate;
+    SearchInterface client;
 
     //Facebook login button
     private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
@@ -133,6 +138,25 @@ public class LoginActivity extends AppCompatActivity {
             main.putExtra("surname", profile.getLastName());
             main.putExtra("imageUrl", profile.getProfilePictureUri(200,200).toString());
             startActivity(main);
+//
+//            rcinitiate=new RetrofitClass(LoginActivity.class,
+//
+//            client =rcinitiate.createBuilder().create(SearchInterface.class);
+//            rcinitiate.startLogging();
+//
+//            Call<RegistrationResponse> call=client.checkUserDetails(fbid));
+//
+//            call.enqueue(new retrofit2.Callback<RegistrationResponse>() {
+//                @Override
+//                public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
+//                    //TODO(1) getResponse;
+//                }
+//
+//                @Override
+//                public void onFailure(Call<RegistrationResponse> call, Throwable t) {
+//                    //TODO(2) isme kya kare?
+//                }
+//            });
         }
     }
 
