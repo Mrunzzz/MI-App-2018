@@ -11,7 +11,7 @@ public class RegistrationRequest {
     @SerializedName("name")
     private String name;
     @SerializedName("fb_id")
-    private long fb_id;
+    private String fb_id;
     @SerializedName("email")
     private String email;
     @SerializedName("mobile_number")
@@ -84,19 +84,13 @@ public class RegistrationRequest {
         this.email = email;
     }
 
-    public String getMi_number() {
-        return mi_number;
-    }
 
-    public void setMi_number(String mi_number) {
-        this.mi_number = mi_number;
-    }
 
-    public long getFb_id() {
+    public String getFb_id() {
         return fb_id;
     }
 
-    public void setFb_id(long fb_id) {
+    public void setFb_id(String  fb_id) {
         this.fb_id = fb_id;
     }
 

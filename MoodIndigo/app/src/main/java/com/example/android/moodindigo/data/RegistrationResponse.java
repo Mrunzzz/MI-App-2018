@@ -11,7 +11,7 @@ public class RegistrationResponse{
     @SerializedName("name")
     private String name;
     @SerializedName("fb_id")
-    private long fb_id;
+    private String fb_id;
     @SerializedName("mi_number")
     private String mi_number;
     @SerializedName("email")
@@ -28,6 +28,9 @@ public class RegistrationResponse{
     private String year_of_study;
     @SerializedName("zip_code")
     private int zip_code;
+    @SerializedName("dob")
+    private String dob;
+
 
 
     public int getZip_code() {
@@ -94,11 +97,11 @@ public class RegistrationResponse{
         this.mi_number = mi_number;
     }
 
-    public long getFb_id() {
+    public String getFb_id() {
         return fb_id;
     }
 
-    public void setFb_id(long fb_id) {
+    public void setFb_id(String fb_id) {
         this.fb_id = fb_id;
     }
 
@@ -108,5 +111,13 @@ public class RegistrationResponse{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
     }
 }

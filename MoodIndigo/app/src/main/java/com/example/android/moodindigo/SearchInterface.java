@@ -26,7 +26,7 @@ public interface SearchInterface {
 //
 //
     @GET("user/{id}")
-    Call<RegistrationResponse> checkUserDetails(@Path("id") long id);
+    Call<RegistrationResponse> checkUserDetails(@Path("id") String id);
 
     @POST("user/create")
     Call<RegistrationResponse> fillRegistrationForm(RegistrationRequest registrationRequest);

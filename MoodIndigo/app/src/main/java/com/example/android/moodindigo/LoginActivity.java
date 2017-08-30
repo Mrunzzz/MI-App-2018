@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.android.moodindigo.Fragments.MainFragment;
+import com.example.android.moodindigo.data.RegistrationRequest;
 import com.example.android.moodindigo.data.RegistrationResponse;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -40,12 +41,15 @@ public class LoginActivity extends AppCompatActivity {
     private ProfileTracker profileTracker;
     RetrofitClass rcinitiate;
     SearchInterface client;
+    String fbid;
+    RegistrationResponse registrationResponse=new RegistrationResponse();
 
     //Facebook login button
     private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
         @Override
         public void onSuccess(LoginResult loginResult) {
             Profile profile = Profile.getCurrentProfile();
+            fbid=loginResult.getAccessToken().getUserId();
             nextActivity(profile);
         }
         @Override
@@ -87,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                 AccessToken accessToken = loginResult.getAccessToken();
                 Profile profile = Profile.getCurrentProfile();
                 nextActivity(profile);
+                fbid=loginResult.getAccessToken().getUserId();
                 Toast.makeText(getApplicationContext(), "Logging in...", Toast.LENGTH_SHORT).show();    }
 
             @Override
@@ -98,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
         loginButton.setReadPermissions("user_friends");
+        loginButton.setReadPermissions("user_email");
         loginButton.registerCallback(callbackManager, callback);
 
 
@@ -127,36 +133,53 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+
     }
 
 
 
-    private void nextActivity(Profile profile){
+
+    private void nextActivity(final Profile profile){
         if(profile != null){
-            Intent main = new Intent(LoginActivity.this, MainActivity.class);
-            main.putExtra("name", profile.getFirstName());
-            main.putExtra("surname", profile.getLastName());
-            main.putExtra("imageUrl", profile.getProfilePictureUri(200,200).toString());
-            startActivity(main);
-//
-//            rcinitiate=new RetrofitClass(LoginActivity.class,
-//
-//            client =rcinitiate.createBuilder().create(SearchInterface.class);
-//            rcinitiate.startLogging();
-//
-//            Call<RegistrationResponse> call=client.checkUserDetails(fbid));
-//
-//            call.enqueue(new retrofit2.Callback<RegistrationResponse>() {
-//                @Override
-//                public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
-//                    //TODO(1) getResponse;
-//                }
-//
-//                @Override
-//                public void onFailure(Call<RegistrationResponse> call, Throwable t) {
-//                    //TODO(2) isme kya kare?
-//                }
-//            });
+
+
+            rcinitiate=new RetrofitClass(LoginActivity.this);
+
+            client =rcinitiate.createBuilder().create(SearchInterface.class);
+            rcinitiate.startLogging();
+
+            Call<RegistrationResponse> call=client.checkUserDetails(fbid);
+
+            call.enqueue(new retrofit2.Callback<RegistrationResponse>() {
+                @Override
+                public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
+                    registrationResponse=response.body();
+
+                    Intent main = new Intent(LoginActivity.this, MainActivity.class);
+                    main.putExtra("name", registrationResponse.getName());
+                    main.putExtra("email", registrationResponse.getEmail());
+                    main.putExtra("imageUrl", profile.getProfilePictureUri(200,200).toString());
+                    main.putExtra("mi number",registrationResponse.getMi_number());
+                    main.putExtra("fbid",registrationResponse.getFb_id());
+                    main.putExtra("college",registrationResponse.getPresent_college());
+                    main.putExtra("city",registrationResponse.getPresent_city());
+                    main.putExtra("address",registrationResponse.getPostal_address());
+                    main.putExtra("zip",registrationResponse.getZip_code());
+                    main.putExtra("mobile",registrationResponse.getMobile_number());
+                    main.putExtra("year",registrationResponse.getYear_of_study());
+
+                    startActivity(main);
+
+                }
+
+                @Override
+                public void onFailure(Call<RegistrationResponse> call, Throwable t) {
+                    Intent main = new Intent(LoginActivity.this, RegistrationActivity.class);
+                    main.putExtra("name", profile.getFirstName()+profile.getLastName());
+                    main.putExtra("imageUrl", profile.getProfilePictureUri(200,200).toString());
+
+                }
+            });
         }
     }
 
