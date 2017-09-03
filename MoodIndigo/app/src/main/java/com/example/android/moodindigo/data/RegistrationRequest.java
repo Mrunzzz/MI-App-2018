@@ -26,6 +26,7 @@ public class RegistrationRequest {
     private String year_of_study;
     @SerializedName("zip_code")
     private int zip_code;
+    private String dob;
 
 
     public int getZip_code() {
@@ -100,5 +101,13 @@ public class RegistrationRequest {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
     }
 }

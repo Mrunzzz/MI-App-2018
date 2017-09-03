@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.android.moodindigo.Fragments.MainFragment;
@@ -20,6 +21,7 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
+import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -45,33 +47,41 @@ public class LoginActivity extends AppCompatActivity {
     RegistrationResponse registrationResponse=new RegistrationResponse();
 
     //Facebook login button
-    private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
+    private FacebookCallback<LoginResult> callback= new FacebookCallback<LoginResult>() {
         @Override
         public void onSuccess(LoginResult loginResult) {
-            Profile profile = Profile.getCurrentProfile();
+            AccessToken accessToken = loginResult.getAccessToken();
             fbid=loginResult.getAccessToken().getUserId();
+            Profile profile = Profile.getCurrentProfile();
             nextActivity(profile);
+
+            Toast.makeText(getApplicationContext(), "Logging in...", Toast.LENGTH_SHORT).show();    }
+
+        @Override
+        public void onCancel() {
         }
+
         @Override
-        public void onCancel() {        }
-        @Override
-        public void onError(FacebookException e) {      }
+        public void onError(FacebookException e) {
+        }
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
         ButterKnife.bind(LoginActivity.this);
 
 
 
-
-        FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
+
         accessTokenTracker = new AccessTokenTracker() {
+
             @Override
             protected void onCurrentAccessTokenChanged(AccessToken oldToken, AccessToken newToken) {
+
             }
         };
 
@@ -89,9 +99,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 AccessToken accessToken = loginResult.getAccessToken();
+                fbid=loginResult.getAccessToken().getUserId();
                 Profile profile = Profile.getCurrentProfile();
                 nextActivity(profile);
-                fbid=loginResult.getAccessToken().getUserId();
+
                 Toast.makeText(getApplicationContext(), "Logging in...", Toast.LENGTH_SHORT).show();    }
 
             @Override
@@ -103,15 +114,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
         loginButton.setReadPermissions("user_friends");
-        loginButton.setReadPermissions("user_email");
         loginButton.registerCallback(callbackManager, callback);
-
 
     }
     @Override
     protected void onResume() {
         super.onResume();
         //Facebook login
+
         Profile profile = Profile.getCurrentProfile();
         nextActivity(profile);
     }
@@ -133,6 +143,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+
 
     }
 
