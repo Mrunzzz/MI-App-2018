@@ -28,6 +28,7 @@ public class RegistrationRequest {
     private String year_of_study;
     @SerializedName("zip_code")
     private int zip_code;
+    @SerializedName("dob")
     private String dob;
 
 
