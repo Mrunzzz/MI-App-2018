@@ -8,6 +8,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class RegistrationRequest {
 
+    public RegistrationRequest(){}
+
     @SerializedName("name")
     private String name;
     @SerializedName("fb_id")
@@ -15,7 +17,7 @@ public class RegistrationRequest {
     @SerializedName("email")
     private String email;
     @SerializedName("mobile_number")
-    private long mobile_number;
+    private String mobile_number;
     @SerializedName("present_city")
     private String present_city;
     @SerializedName("present_college")
@@ -69,11 +71,11 @@ public class RegistrationRequest {
         this.present_city = present_city;
     }
 
-    public long getMobile_number() {
+    public String getMobile_number() {
         return mobile_number;
     }
 
-    public void setMobile_number(long mobile_number) {
+    public void setMobile_number(String mobile_number) {
         this.mobile_number = mobile_number;
     }
 

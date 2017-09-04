@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -30,7 +31,7 @@ import retrofit2.Response;
 public class RegistrationActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     RetrofitClass rcinitiate;
-    RegistrationRequest registrationRequest;
+    RegistrationRequest registrationRequest=new RegistrationRequest();
 
     @BindView(R.id.name)
     EditText et_name;
@@ -66,8 +67,9 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
 
         Bundle bundle=getIntent().getExtras();
         et_name.setText(bundle.get("name").toString());
-        id= bundle.get("fbid").toString();
-        image=bundle.get("image");
+        id= (String) bundle.get("fbid");
+        Log.i("fbid2",id);
+        image=bundle.get("imageUrl");
 
         year_spinner.setOnItemSelectedListener(this);
 
@@ -97,6 +99,8 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
                     }
                 },mYear,mMonth,mDay);
 
+                datePickerDialog.show();
+
             }
         });
 
@@ -107,9 +111,11 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
         submit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                registrationRequest.setEmail(et_email.getText().toString());
+
+
                 registrationRequest.setName(et_name.getText().toString());
-                registrationRequest.setMobile_number(Long.parseLong(et_mobile.getText().toString()));
+                registrationRequest.setEmail(et_email.getText().toString());
+                registrationRequest.setMobile_number(et_mobile.getText().toString());
                 registrationRequest.setPresent_city(et_city.getText().toString());
                 registrationRequest.setPresent_college(et_college.getText().toString());
                 registrationRequest.setPostal_address(et_address.getText().toString());
@@ -117,6 +123,8 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
                 registrationRequest.setFb_id(id);
                 registrationRequest.setYear_of_study(year);
                 registrationRequest.setDob(dob.getText().toString());
+
+
 
 
                 rcinitiate = new RetrofitClass(RegistrationActivity.this);
@@ -129,6 +137,7 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
                 call.enqueue(new retrofit2.Callback<RegistrationResponse>() {
                     @Override
                     public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
+                        Log.i("Indicator","Entered");
                         Intent main = new Intent(RegistrationActivity.this, MainActivity.class);
                         main.putExtra("name", registrationResponse.getName());
                         main.putExtra("email", registrationResponse.getEmail());
@@ -141,6 +150,10 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
                         main.putExtra("zip",registrationResponse.getZip_code());
                         main.putExtra("mobile",registrationResponse.getMobile_number());
                         main.putExtra("year",registrationResponse.getYear_of_study());
+                        main.putExtra("dob",registrationResponse.getDob());
+                        startActivity(main);
+
+
                     }
 
                     @Override
