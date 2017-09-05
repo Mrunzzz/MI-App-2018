@@ -112,8 +112,9 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
             @Override
             public void onClick(View view) {
 
-
+                Log.e("No Error" ,"No Error");
                 registrationRequest.setName(et_name.getText().toString());
+                Log.e("Error" ,"Error");
                 registrationRequest.setEmail(et_email.getText().toString());
                 registrationRequest.setMobile_number(et_mobile.getText().toString());
                 registrationRequest.setPresent_city(et_city.getText().toString());
