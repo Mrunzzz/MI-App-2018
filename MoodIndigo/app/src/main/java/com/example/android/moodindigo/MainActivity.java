@@ -55,12 +55,11 @@ public class MainActivity extends AppCompatActivity
 
         Bundle inBundle = getIntent().getExtras();
         String name = inBundle.get("name").toString();
-        String surname = inBundle.get("surname").toString();
         String imageUrl = inBundle.get("imageUrl").toString();
 
         View hview=navigationView.getHeaderView(0);
         TextView userName=(TextView) hview.findViewById(R.id.textView1);
-        userName.setText(name+" " +surname);
+        userName.setText(name);
 
         ImageView profileImage=(ImageView) hview.findViewById(R.id.imageView);
         new DownloadImage(profileImage).execute(imageUrl);
