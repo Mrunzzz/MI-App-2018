@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.android.moodindigo.Fragments.CompiFragment;
+import com.example.android.moodindigo.Fragments.EventsFragment;
 import com.example.android.moodindigo.Fragments.FAQFragment;
 import com.example.android.moodindigo.Fragments.NewzFragment;
 
@@ -32,14 +33,15 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
         switch (position){
             case 0:
-                CompiFragment compiFragment = new CompiFragment();
-                return compiFragment;
-            case 1:
                 NewzFragment newzFragment = new NewzFragment();
                 return newzFragment;
+
+            case 1:
+                CompiFragment compiFragment = new CompiFragment();
+                return compiFragment;
             case 2:
-                FAQFragment faqFragment = new FAQFragment();
-                return faqFragment;
+                EventsFragment eventsFragment=new EventsFragment();
+                return eventsFragment;
             default:
                 return null;
         }

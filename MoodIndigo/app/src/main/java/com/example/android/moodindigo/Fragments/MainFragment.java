@@ -48,8 +48,8 @@ public class MainFragment extends Fragment {
 
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         tabLayout.addTab(tabLayout.newTab().setText("News"));
-        tabLayout.addTab(tabLayout.newTab().setText("Competitions"));
-        tabLayout.addTab(tabLayout.newTab().setText("FAQ"));
+        tabLayout.addTab(tabLayout.newTab().setText("Multicity"));
+        tabLayout.addTab(tabLayout.newTab().setText("Events"));
 
         viewPager = (ViewPager) view.findViewById(R.id.pager);
         viewPager.setAdapter(new PagerAdapter(getFragmentManager(), tabLayout.getTabCount()));
