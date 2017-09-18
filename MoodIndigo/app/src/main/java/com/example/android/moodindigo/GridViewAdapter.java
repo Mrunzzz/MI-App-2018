@@ -43,6 +43,7 @@ public class GridViewAdapter extends BaseAdapter {
     List<GenresResponse> artsAndIdeasResponseList=new ArrayList<>();
     RetrofitClass rcinitiate;
     SearchInterface client;
+    public int pull=1;
     private List<Item> genres=new ArrayList<>();
     private Context context;
 
@@ -54,34 +55,7 @@ public class GridViewAdapter extends BaseAdapter {
         genres.add(new Item("Workshops", R.drawable.ic_menu_compi));
         genres.add(new Item("Arts and Ideas", R.drawable.ic_menu_compi));
         this.context = context;
-        rcinitiate=new RetrofitClass(context);
 
-        client=rcinitiate.createBuilder().create(SearchInterface.class);
-
-        rcinitiate.startLogging();
-
-        Call<EventsResponse> call=client.getEvents();
-
-        call.enqueue(new Callback<EventsResponse>() {
-            @Override
-            public void onResponse(Call< EventsResponse > call, Response<EventsResponse> response) {
-
-                EventsResponse eventsResponse = response.body();
-                competitionsResponseList = eventsResponse.getCompetitions();
-                Log.i("response",competitionsResponseList.get(0).getName());
-                proshowsResponseList = eventsResponse.getProshows();
-                Log.i("response2",proshowsResponseList.get(0).getName());
-                informalsResponseList = eventsResponse.getInformals();
-                workshopsResponseList = eventsResponse.getWorkshops();
-                concertsResponseList = eventsResponse.getConcerts();
-                artsAndIdeasResponseList = eventsResponse.getArtsAndIdeas();
-
-            }
-            @Override
-            public void onFailure(Call<EventsResponse> call, Throwable t) {
-
-            }
-        });
     }
 
 
@@ -111,7 +85,6 @@ public class GridViewAdapter extends BaseAdapter {
         LinearLayout linearLayout;
         TextView name;
         ImageView image;
-
         linearLayout=view.findViewById(R.id.linearlayout);
         name=view.findViewById(R.id.genre_name);
         image=view.findViewById(R.id.genre_image);
@@ -119,39 +92,73 @@ public class GridViewAdapter extends BaseAdapter {
         name.setText(genres.get(i).name);
         image.setImageResource(genres.get(i).drawableid);
 
+
+
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
 
+                    rcinitiate=new RetrofitClass(context);
 
-                Intent intent=new Intent(context,GenresActivity.class);
+                    client=rcinitiate.createBuilder().create(SearchInterface.class);
 
-                switch (i)
-                {
-                    case 0: String responselist= new Gson().toJson(competitionsResponseList);
+                    rcinitiate.startLogging();
 
-                        intent.putExtra("List",responselist);
-                        Log.i("send",responselist);
-                        context.startActivity(intent);
-                    case 1: responselist= new Gson().toJson(concertsResponseList);
-                        intent.putExtra("List",responselist);
-                        context.startActivity(intent);
-                    case 2: responselist= new Gson().toJson(informalsResponseList);
-                        intent.putExtra("List",responselist);
-                        context.startActivity(intent);
-                    case 3:  responselist= new Gson().toJson(proshowsResponseList);
-                        intent.putExtra("List",responselist);
-                        context.startActivity(intent);
-                    case 4: responselist= new Gson().toJson(workshopsResponseList);
-                        intent.putExtra("List",responselist);
-                        context.startActivity(intent);
-                    case 5:  responselist= new Gson().toJson(artsAndIdeasResponseList);
-                        intent.putExtra("List",responselist);
-                        context.startActivity(intent);
+                    Call<EventsResponse> call=client.getEvents();
+
+                    call.enqueue(new Callback<EventsResponse>() {
+                        @Override
+                        public void onResponse(Call< EventsResponse > call, Response<EventsResponse> response) {
+
+                            EventsResponse eventsResponse = response.body();
+                            competitionsResponseList = eventsResponse.getCompetitions();
+                            Log.i("response",competitionsResponseList.get(0).getName());
+                            proshowsResponseList = eventsResponse.getProshows();
+                            Log.i("response2",proshowsResponseList.get(0).getName());
+                            informalsResponseList = eventsResponse.getInformals();
+                            workshopsResponseList = eventsResponse.getWorkshops();
+                            concertsResponseList = eventsResponse.getConcerts();
+                            artsAndIdeasResponseList = eventsResponse.getArtsAndIdeas();
+                            Intent intent=new Intent(context,GenresActivity.class);
+                            Log.i("check", String.valueOf(competitionsResponseList.size()));
+
+                            switch (i)
+                            {
+                                case 0: String responselist= new Gson().toJson(competitionsResponseList);
+                                    intent.putExtra("List",responselist);
+                                    Log.i("send",responselist);
+                                    context.startActivity(intent);
+                                case 1: responselist= new Gson().toJson(concertsResponseList);
+                                    intent.putExtra("List",responselist);
+                                    context.startActivity(intent);
+                                case 2: responselist= new Gson().toJson(informalsResponseList);
+                                    intent.putExtra("List",responselist);
+                                    context.startActivity(intent);
+                                case 3:  responselist= new Gson().toJson(proshowsResponseList);
+                                    intent.putExtra("List",responselist);
+                                    context.startActivity(intent);
+                                case 4: responselist= new Gson().toJson(workshopsResponseList);
+                                    intent.putExtra("List",responselist);
+                                    context.startActivity(intent);
+                                case 5:  responselist= new Gson().toJson(artsAndIdeasResponseList);
+                                    intent.putExtra("List",responselist);
+                                    context.startActivity(intent);
 
 
-                }
+                            }
+
+                        }
+                        @Override
+                        public void onFailure(Call<EventsResponse> call, Throwable t) {
+
+                        }
+                    });
+
+
+
+
+
 
 
 
