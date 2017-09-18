@@ -1,9 +1,11 @@
 package com.example.android.moodindigo;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 
 import com.example.android.moodindigo.Fragments.CompiFragment;
 import com.example.android.moodindigo.Fragments.FAQFragment;
@@ -17,10 +19,14 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     int mNumOfTabs; // number of tab variable for viewPager
 
+
     //PagerAdapter Constructor
     public PagerAdapter(FragmentManager fm, int NumOfTabs) {
         super(fm);
+
         this.mNumOfTabs = NumOfTabs;
+
+
     }
 
     @Override
@@ -44,5 +50,6 @@ public class PagerAdapter extends FragmentPagerAdapter {
                 return null;
         }
     }
+
 
 }
