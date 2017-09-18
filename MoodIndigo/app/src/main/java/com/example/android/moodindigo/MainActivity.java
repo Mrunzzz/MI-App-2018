@@ -3,8 +3,10 @@ package com.example.android.moodindigo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInstaller;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
@@ -23,6 +25,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.moodindigo.Fragments.MainFragment;
 import com.example.android.moodindigo.R;
@@ -77,7 +80,7 @@ public class MainActivity extends AppCompatActivity
         MainFragment mainFragment=new MainFragment();
         FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.relative_layout_for_main_fragment,mainFragment,mainFragment.getTag());
-        ft.addToBackStack("main");
+        //ft.addToBackStack("main");
         ft.commit();
 
 
@@ -87,15 +90,15 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onResume() { super.onResume();}
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
+//    @Override
+//    public void onBackPressed() {
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawer(GravityCompat.START);
+//        } else {
+//            super.onBackPressed();
+//        }
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -125,23 +128,109 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_faq) {
-            // Handle the camera action
-        } else if (id == R.id.nav_faq) {
+//        if (id == R.id.nav_faq) {
+//            // Handle the camera action
+//        }
+        if (id == R.id.nav_events) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(getApplicationContext(), EventsActivity.class);
+                    startActivity(intent);
+                }
+            }, 120);
 
-        } else if (id == R.id.nav_faq) {
 
-        } else if (id == R.id.nav_faq) {
+        } else if (id == R.id.nav_about) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(getApplicationContext(), AboutMIActivity.class);
+                    startActivity(intent);
+                }
+            }, 120);
 
-        } else if (id == R.id.nav_faq) {
+        } else if (id == R.id.nav_lookback) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(getApplicationContext(), MILookbackActivity.class);
+                    startActivity(intent);
+                }
+            }, 120);
 
-        } else if (id == R.id.nav_faq) {
 
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private boolean backPressedToExitOnce = false;
+    private Toast toast = null;
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+
+        }
+        else if (backPressedToExitOnce) {
+            super.onBackPressed();
+        } else {
+            this.backPressedToExitOnce = true;
+            toast = Toast.makeText(getApplicationContext(),"Press again to exit",Toast.LENGTH_SHORT);
+            toast.show();//showToast("Press again to exit");
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    backPressedToExitOnce = false;
+                }
+            }, 2000);
+        }
+
+    }
+    /**
+     * Created to make sure that you toast doesn't show miltiple times, if user pressed back
+     * button more than once.
+     * @param message Message to show on toast.
+     */
+    private void showToast(String message) {
+        if (this.toast == null) {
+            // Create toast if found null, it would he the case of first call only
+            this.toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+
+        } else if (this.toast.getView() == null) {
+            // Toast not showing, so create new one
+            this.toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+
+        } else {
+            // Updating toast message is showing
+            this.toast.setText(message);
+        }
+
+        // Showing toast finally
+        this.toast.show();
+    }
+    /**
+     * Kill the toast if showing. Supposed to call from onPause() of activity.
+     * So that toast also get removed as activity goes to background, to improve
+     * better app experiance for user
+     */
+    private void killToast() {
+        if (this.toast != null) {
+            this.toast.cancel();
+        }
+    }
+    @Override
+    protected void onPause() {
+        killToast();
+        super.onPause();
     }
 
 

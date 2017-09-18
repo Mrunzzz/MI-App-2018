@@ -4,26 +4,26 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_compi"
-            android:icon="@drawable/ic_menu_compi"
-            android:title="Competitions" />
+        <!--<item-->
+            <!--android:id="@+id/nav_compi"-->
+            <!--android:icon="@drawable/ic_menu_compi"-->
+            <!--android:title="Competitions" />-->
         <item
             android:id="@+id/nav_events"
             android:icon="@drawable/ic_menu_event"
             android:title="Events" />
-        <item
-            android:id="@+id/nav_voting"
-            android:icon="@drawable/ic_menu_voting"
-            android:title="Voting" />
-        <item
-            android:id="@+id/nav_news"
-            android:icon="@drawable/ic_menu_news"
-            android:title="News" />
-        <item
-            android:id="@+id/nav_faq"
-            android:icon="@drawable/ic_menu_help"
-            android:title="F.A.Q." />
+        <!--<item-->
+            <!--android:id="@+id/nav_voting"-->
+            <!--android:icon="@drawable/ic_menu_voting"-->
+            <!--android:title="Voting" />-->
+        <!--<item-->
+            <!--android:id="@+id/nav_news"-->
+            <!--android:icon="@drawable/ic_menu_news"-->
+            <!--android:title="News" />-->
+        <!--<item-->
+            <!--android:id="@+id/nav_faq"-->
+            <!--android:icon="@drawable/ic_menu_help"-->
+            <!--android:title="F.A.Q." />-->
         <item
             android:id="@+id/nav_lookback"
             android:icon="@drawable/ic_menu_lookback"
