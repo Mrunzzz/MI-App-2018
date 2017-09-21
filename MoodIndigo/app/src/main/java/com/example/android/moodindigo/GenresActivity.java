@@ -28,13 +28,14 @@ public class GenresActivity extends AppCompatActivity {
         Bundle bundle=getIntent().getExtras();
 
         int size= (int) bundle.get("size");
-        Log.d("Yo","Yo");
+        Log.d("size", String.valueOf(size));
 
         String responsejson;
-        for(int j=0;j<size;j++) {
+        for(int j=1;j<size;j++) {
             responsejson=bundle.getString("List"+j);
             responses.add(new Gson().fromJson(responsejson, GenresResponse.class));
         }
+        //responses.add(new Gson().fromJson(bundle.getString("new"),GenresResponse.class));
 
 
             //Log.i("Recieved",responses.get(0).getName());

@@ -113,12 +113,17 @@ public class GridViewAdapter extends BaseAdapter {
             public void onClick(View view) {
                 switch (i) {
                     case 0:
+                       ;
                         Intent intent = new Intent(context, GenresActivity.class);
                         String responselist;
                         intent.putExtra("size",competitionsResponseList.size());
-                        for(int i=0;i<competitionsResponseList.size();i++){
+                        for(int i=1;i<competitionsResponseList.size();i++){
                         responselist = new Gson().toJson(competitionsResponseList.get(i));
-                        intent.putExtra("List"+i, responselist);}
+                        intent.putExtra("List"+i, responselist);
+                        Log.d("List"+i,competitionsResponseList.get(i).getName());
+
+                        }
+                        //intent.putExtra("new",new Gson().toJson(competitionsResponseList.get(0)));
 
                         context.startActivity(intent);
                         break;
