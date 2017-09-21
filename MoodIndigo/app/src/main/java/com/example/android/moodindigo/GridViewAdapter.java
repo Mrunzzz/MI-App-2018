@@ -35,23 +35,11 @@ import retrofit2.Response;
  */
 
 public class GridViewAdapter extends BaseAdapter {
-    List<GenresResponse> competitionsResponseList=new ArrayList<>();
-    List<GenresResponse> concertsResponseList=new ArrayList<>();
-    List<GenresResponse> informalsResponseList=new ArrayList<>();
-    List<GenresResponse> proshowsResponseList=new ArrayList<>();
-    List<GenresResponse> workshopsResponseList=new ArrayList<>();
-    List<GenresResponse> artsAndIdeasResponseList=new ArrayList<>();
-    RetrofitClass rcinitiate;
-    SearchInterface client;
-    public int pull=1;
+
     private List<Item> genres=new ArrayList<>();
     private Context context;
 
-    public GridViewAdapter(Context context, List<GenresResponse> competitionsResponseList,List<GenresResponse> concertsResponseList,
-    List<GenresResponse> informalsResponseList,
-    List<GenresResponse> proshowsResponseList,
-    List<GenresResponse> workshopsResponseList,
-    List<GenresResponse> artsAndIdeasResponseList) {
+    public GridViewAdapter(Context context) {
         genres.add(new Item("Competitions", R.drawable.ic_menu_compi));
         genres.add(new Item("Concerts", R.drawable.ic_menu_compi));
         genres.add(new Item("Informals", R.drawable.ic_menu_compi));
@@ -59,13 +47,7 @@ public class GridViewAdapter extends BaseAdapter {
         genres.add(new Item("Workshops", R.drawable.ic_menu_compi));
         genres.add(new Item("Arts and Ideas", R.drawable.ic_menu_compi));
         this.context = context;
-        this.concertsResponseList=concertsResponseList;
-        this.competitionsResponseList=competitionsResponseList;
-        this.informalsResponseList=informalsResponseList;
-        this.workshopsResponseList=workshopsResponseList;
-        this.proshowsResponseList=proshowsResponseList;
-        this.artsAndIdeasResponseList=artsAndIdeasResponseList;
-        Log.i("Log1", String.valueOf(competitionsResponseList.size()));
+
 
     }
 
@@ -104,7 +86,7 @@ public class GridViewAdapter extends BaseAdapter {
         image.setImageResource(genres.get(i).drawableid);
 
 
-        Log.i("Log2", String.valueOf(competitionsResponseList.size()));
+
 
 
 
@@ -113,48 +95,34 @@ public class GridViewAdapter extends BaseAdapter {
             public void onClick(View view) {
                 switch (i) {
                     case 0:
-                       ;
                         Intent intent = new Intent(context, GenresActivity.class);
-                        String responselist;
-                        intent.putExtra("size",competitionsResponseList.size());
-                        for(int i=1;i<competitionsResponseList.size();i++){
-                        responselist = new Gson().toJson(competitionsResponseList.get(i));
-                        intent.putExtra("List"+i, responselist);
-                        Log.d("List"+i,competitionsResponseList.get(i).getName());
-
-                        }
-                        //intent.putExtra("new",new Gson().toJson(competitionsResponseList.get(0)));
-
+                        intent.putExtra("Type","competitions");
                         context.startActivity(intent);
                         break;
                     case 1:
                         intent = new Intent(context, GenresActivity.class);
-                        responselist = new Gson().toJson(concertsResponseList);
-                        intent.putExtra("List", responselist);
+                        intent.putExtra("Type","concerts");
                         context.startActivity(intent);
                         break;
                     case 2:
                         intent = new Intent(context, GenresActivity.class);
-                        responselist = new Gson().toJson(informalsResponseList);
-                        intent.putExtra("List", responselist);
+                        intent.putExtra("Type","informals");
                         context.startActivity(intent);
+
                         break;
                     case 3:
                         intent = new Intent(context, GenresActivity.class);
-                        responselist = new Gson().toJson(proshowsResponseList);
-                        intent.putExtra("List", responselist);
+                        intent.putExtra("Type","proshows");
                         context.startActivity(intent);
                         break;
                     case 4:
                         intent = new Intent(context, GenresActivity.class);
-                        responselist = new Gson().toJson(workshopsResponseList);
-                        intent.putExtra("List", responselist);
+                        intent.putExtra("Type","workshops");
                         context.startActivity(intent);
                         break;
                     case 5:
                         intent = new Intent(context, GenresActivity.class);
-                        responselist = new Gson().toJson(artsAndIdeasResponseList);
-                        intent.putExtra("List", responselist);
+                        intent.putExtra("Type","arts and ideas");
                         context.startActivity(intent);
                         break;
 

@@ -52,43 +52,14 @@ public class EventsFragment extends Fragment {
 
         final View rootView = inflater.inflate(R.layout.fragment_events, container, false);
 
-        rcinitiate = new RetrofitClass(getContext());
 
-        client = rcinitiate.createBuilder().create(SearchInterface.class);
-
-        rcinitiate.startLogging();
-
-        Call<EventsResponse> call = client.getEvents();
-
-        call.enqueue(new Callback<EventsResponse>() {
-            @Override
-            public void onResponse(Call<EventsResponse> call, Response<EventsResponse> response) {
-
-                EventsResponse eventsResponse = response.body();
-                competitionsResponseList = eventsResponse.getCompetitions();
-                Log.i("response", competitionsResponseList.get(0).getName());
-                proshowsResponseList = eventsResponse.getProshows();
-                Log.i("response2", proshowsResponseList.get(0).getName());
-                informalsResponseList = eventsResponse.getInformals();
-                workshopsResponseList = eventsResponse.getWorkshops();
-                concertsResponseList = eventsResponse.getConcerts();
-                artsAndIdeasResponseList = eventsResponse.getArtsAndIdeas();
-
-                GridViewAdapter gridViewAdapter = new GridViewAdapter(getContext(),competitionsResponseList,concertsResponseList,informalsResponseList,proshowsResponseList,workshopsResponseList,artsAndIdeasResponseList);
+                GridViewAdapter gridViewAdapter = new GridViewAdapter(getContext());
                 GridView gridView;
                 gridView = rootView.findViewById(R.id.gridview);
 
                 gridView.setAdapter(gridViewAdapter);
 
 
-            }
-
-            @Override
-            public void onFailure(Call<EventsResponse> call, Throwable t) {
-
-            }
-
-        });
     return rootView;
     }
 }
