@@ -47,7 +47,11 @@ public class GridViewAdapter extends BaseAdapter {
     private List<Item> genres=new ArrayList<>();
     private Context context;
 
-    public GridViewAdapter(Context context) {
+    public GridViewAdapter(Context context, List<GenresResponse> competitionsResponseList,List<GenresResponse> concertsResponseList,
+    List<GenresResponse> informalsResponseList,
+    List<GenresResponse> proshowsResponseList,
+    List<GenresResponse> workshopsResponseList,
+    List<GenresResponse> artsAndIdeasResponseList) {
         genres.add(new Item("Competitions", R.drawable.ic_menu_compi));
         genres.add(new Item("Concerts", R.drawable.ic_menu_compi));
         genres.add(new Item("Informals", R.drawable.ic_menu_compi));
@@ -55,6 +59,13 @@ public class GridViewAdapter extends BaseAdapter {
         genres.add(new Item("Workshops", R.drawable.ic_menu_compi));
         genres.add(new Item("Arts and Ideas", R.drawable.ic_menu_compi));
         this.context = context;
+        this.concertsResponseList=concertsResponseList;
+        this.competitionsResponseList=competitionsResponseList;
+        this.informalsResponseList=informalsResponseList;
+        this.workshopsResponseList=workshopsResponseList;
+        this.proshowsResponseList=proshowsResponseList;
+        this.artsAndIdeasResponseList=artsAndIdeasResponseList;
+        Log.i("Log1", String.valueOf(competitionsResponseList.size()));
 
     }
 
@@ -80,89 +91,73 @@ public class GridViewAdapter extends BaseAdapter {
     @Override
     public View getView(final int i, View view, ViewGroup viewGroup) {
         final LayoutInflater inflater = LayoutInflater.from(context);
-        view=inflater.inflate(R.layout.grid_item,viewGroup,false);
+        view = inflater.inflate(R.layout.grid_item, viewGroup, false);
 
         LinearLayout linearLayout;
         TextView name;
         ImageView image;
-        linearLayout=view.findViewById(R.id.linearlayout);
-        name=view.findViewById(R.id.genre_name);
-        image=view.findViewById(R.id.genre_image);
+        linearLayout = view.findViewById(R.id.linearlayout);
+        name = view.findViewById(R.id.genre_name);
+        image = view.findViewById(R.id.genre_image);
 
         name.setText(genres.get(i).name);
         image.setImageResource(genres.get(i).drawableid);
+
+
+        Log.i("Log2", String.valueOf(competitionsResponseList.size()));
 
 
 
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                switch (i) {
+                    case 0:
+                        Intent intent = new Intent(context, GenresActivity.class);
+                        String responselist;
+                        responselist = new Gson().toJson(competitionsResponseList);
+                        intent.putExtra("List", responselist);
+                        //Log.i("send", responselist);
+                        context.startActivity(intent);
+                        break;
+                    case 1:
+                        intent = new Intent(context, GenresActivity.class);
+                        responselist = new Gson().toJson(concertsResponseList);
+                        intent.putExtra("List", responselist);
+                        context.startActivity(intent);
+                        break;
+                    case 2:
+                        intent = new Intent(context, GenresActivity.class);
+                        responselist = new Gson().toJson(informalsResponseList);
+                        intent.putExtra("List", responselist);
+                        context.startActivity(intent);
+                        break;
+                    case 3:
+                        intent = new Intent(context, GenresActivity.class);
+                        responselist = new Gson().toJson(proshowsResponseList);
+                        intent.putExtra("List", responselist);
+                        context.startActivity(intent);
+                        break;
+                    case 4:
+                        intent = new Intent(context, GenresActivity.class);
+                        responselist = new Gson().toJson(workshopsResponseList);
+                        intent.putExtra("List", responselist);
+                        context.startActivity(intent);
+                        break;
+                    case 5:
+                        intent = new Intent(context, GenresActivity.class);
+                        responselist = new Gson().toJson(artsAndIdeasResponseList);
+                        intent.putExtra("List", responselist);
+                        context.startActivity(intent);
+                        break;
 
 
-                    rcinitiate=new RetrofitClass(context);
-
-                    client=rcinitiate.createBuilder().create(SearchInterface.class);
-
-                    rcinitiate.startLogging();
-
-                    Call<EventsResponse> call=client.getEvents();
-
-                    call.enqueue(new Callback<EventsResponse>() {
-                        @Override
-                        public void onResponse(Call< EventsResponse > call, Response<EventsResponse> response) {
-
-                            EventsResponse eventsResponse = response.body();
-                            competitionsResponseList = eventsResponse.getCompetitions();
-                            Log.i("response",competitionsResponseList.get(0).getName());
-                            proshowsResponseList = eventsResponse.getProshows();
-                            Log.i("response2",proshowsResponseList.get(0).getName());
-                            informalsResponseList = eventsResponse.getInformals();
-                            workshopsResponseList = eventsResponse.getWorkshops();
-                            concertsResponseList = eventsResponse.getConcerts();
-                            artsAndIdeasResponseList = eventsResponse.getArtsAndIdeas();
-                            Intent intent=new Intent(context,GenresActivity.class);
-                            Log.i("check", String.valueOf(competitionsResponseList.size()));
-
-                            switch (i)
-                            {
-                                case 0: String responselist= new Gson().toJson(competitionsResponseList);
-                                    intent.putExtra("List",responselist);
-                                    Log.i("send",responselist);
-                                    context.startActivity(intent);
-                                case 1: responselist= new Gson().toJson(concertsResponseList);
-                                    intent.putExtra("List",responselist);
-                                    context.startActivity(intent);
-                                case 2: responselist= new Gson().toJson(informalsResponseList);
-                                    intent.putExtra("List",responselist);
-                                    context.startActivity(intent);
-                                case 3:  responselist= new Gson().toJson(proshowsResponseList);
-                                    intent.putExtra("List",responselist);
-                                    context.startActivity(intent);
-                                case 4: responselist= new Gson().toJson(workshopsResponseList);
-                                    intent.putExtra("List",responselist);
-                                    context.startActivity(intent);
-                                case 5:  responselist= new Gson().toJson(artsAndIdeasResponseList);
-                                    intent.putExtra("List",responselist);
-                                    context.startActivity(intent);
-
-
-                            }
-
-                        }
-                        @Override
-                        public void onFailure(Call<EventsResponse> call, Throwable t) {
-
-                        }
-                    });
+                }
 
 
 
 
-
-
-
-
-                    }
+            }
 
 
         });

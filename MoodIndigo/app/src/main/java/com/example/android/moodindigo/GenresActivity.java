@@ -28,6 +28,7 @@ public class GenresActivity extends AppCompatActivity {
         Bundle bundle=getIntent().getExtras();
 
             String responsejson =bundle.getString("List");
+
         Log.i("rec",responsejson);
 
         GenresResponse[] responses1= new Gson().fromJson(responsejson, GenresResponse[].class);
