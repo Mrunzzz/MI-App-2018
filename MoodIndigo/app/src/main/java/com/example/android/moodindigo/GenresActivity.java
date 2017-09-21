@@ -24,16 +24,19 @@ public class GenresActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_genres);
-
+        Log.d("Yo","Yo");
         Bundle bundle=getIntent().getExtras();
 
-            String responsejson =bundle.getString("List");
+        int size= (int) bundle.get("size");
+        Log.d("Yo","Yo");
 
-        Log.i("rec",responsejson);
+        String responsejson;
+        for(int j=0;j<size;j++) {
+            responsejson=bundle.getString("List"+j);
+            responses.add(new Gson().fromJson(responsejson, GenresResponse.class));
+        }
 
-        GenresResponse[] responses1= new Gson().fromJson(responsejson, GenresResponse[].class);
 
-            responses=new ArrayList<GenresResponse>(Arrays.asList(responses1));
             //Log.i("Recieved",responses.get(0).getName());
 
 
@@ -43,5 +46,5 @@ public class GenresActivity extends AppCompatActivity {
         recyclerView=findViewById(R.id.recycler_view);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
+ }
 }

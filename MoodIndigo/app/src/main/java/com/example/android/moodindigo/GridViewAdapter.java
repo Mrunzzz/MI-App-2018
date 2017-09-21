@@ -115,9 +115,11 @@ public class GridViewAdapter extends BaseAdapter {
                     case 0:
                         Intent intent = new Intent(context, GenresActivity.class);
                         String responselist;
-                        responselist = new Gson().toJson(competitionsResponseList);
-                        intent.putExtra("List", responselist);
-                        //Log.i("send", responselist);
+                        intent.putExtra("size",competitionsResponseList.size());
+                        for(int i=0;i<competitionsResponseList.size();i++){
+                        responselist = new Gson().toJson(competitionsResponseList.get(i));
+                        intent.putExtra("List"+i, responselist);}
+
                         context.startActivity(intent);
                         break;
                     case 1:
