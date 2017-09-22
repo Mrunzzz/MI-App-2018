@@ -7,9 +7,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.android.moodindigo.MyAdapter;
+import com.example.android.moodindigo.NewsCardAdapter;
 import com.example.android.moodindigo.R;
+import com.example.android.moodindigo.RetrofitClass;
+import com.example.android.moodindigo.SearchInterface;
+import com.example.android.moodindigo.data.NewsResponse;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by owais on 19/08/17.
@@ -17,9 +30,12 @@ import com.example.android.moodindigo.R;
 
 public class NewzFragment extends Fragment {
     public View view;
-    public NewzFragment() {
-        // Required empty public constructor
-    }
+    RetrofitClass rcinitiate;
+    SearchInterface client;
+    int size;
+    ProgressBar progressBar;
+    List<NewsResponse> responses=new ArrayList<>();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,15 +48,28 @@ public class NewzFragment extends Fragment {
         //container.removeAllViews();
 
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_newz, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_newz, container, false);
 
-        RecyclerView rv = (RecyclerView) rootView.findViewById(R.id.recycler_view_news);
-        rv.setHasFixedSize(true);
-        MyAdapter adapter = new MyAdapter(new String[]{"Example One", "Example Two", "Example Three", "Example Four", "Example Five" , "Example Six" , "Example Seven"});
-        rv.setAdapter(adapter);
+        Bundle bundle=getArguments();
+        size=bundle.getInt("size");
+        for(int j=0;j<size;j++){
+            responses.add(new Gson().fromJson(bundle.getString("List"+j),NewsResponse.class));
+        }
 
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        rv.setLayoutManager(llm);
+
+                RecyclerView rv = (RecyclerView) rootView.findViewById(R.id.recycler_view_news);
+                rv.setHasFixedSize(true);
+                NewsCardAdapter adapter=new NewsCardAdapter(responses);
+                rv.setAdapter(adapter);
+
+                LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+                rv.setLayoutManager(llm);
+
+
+
+
+
+
 
         return rootView;
 

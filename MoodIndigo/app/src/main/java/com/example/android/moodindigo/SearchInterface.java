@@ -2,6 +2,7 @@ package com.example.android.moodindigo;
 
 
 import com.example.android.moodindigo.data.EventsResponse;
+import com.example.android.moodindigo.data.NewsResponse;
 import com.example.android.moodindigo.data.RegistrationRequest;
 import com.example.android.moodindigo.data.RegistrationResponse;
 
@@ -35,6 +36,9 @@ public interface SearchInterface {
 
     @GET("events")
     Call<EventsResponse> getEvents();
+
+    @GET("news")
+    Call<List<NewsResponse>> getNews();
 
 
 
