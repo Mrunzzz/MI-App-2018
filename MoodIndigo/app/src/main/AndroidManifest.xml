@@ -51,7 +51,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegistrationActivity" />
-        <activity android:name=".GenresActivity"/>
+        <activity android:name=".GenresActivity" />
+        <activity android:name=".EventListActivity"></activity>
     </application>
 
 </manifest>

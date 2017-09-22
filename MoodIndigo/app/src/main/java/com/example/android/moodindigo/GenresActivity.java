@@ -85,7 +85,7 @@ public class GenresActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
 
 
-                adapter = new GenresAdapter(responses);
+                adapter = new GenresAdapter(responses,GenresActivity.this);
                 recyclerView = findViewById(R.id.recycler_view);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
