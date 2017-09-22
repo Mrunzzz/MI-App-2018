@@ -13,6 +13,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -25,18 +28,31 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.moodindigo.Fragments.MainFragment;
 import com.example.android.moodindigo.R;
+import com.example.android.moodindigo.data.NewsResponse;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    List<NewsResponse> responses = new ArrayList<>();
+    RetrofitClass rcinitiate;
+    SearchInterface client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +63,7 @@ public class MainActivity extends AppCompatActivity
         FacebookSdk.sdkInitialize(getApplicationContext());
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        final ProgressBar pb=findViewById(R.id.pb);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -61,35 +78,65 @@ public class MainActivity extends AppCompatActivity
         String name = inBundle.get("name").toString();
         String imageUrl = inBundle.get("imageUrl").toString();
 
-        View hview=navigationView.getHeaderView(0);
-        TextView userName=(TextView) hview.findViewById(R.id.textView1);
+        View hview = navigationView.getHeaderView(0);
+        TextView userName = (TextView) hview.findViewById(R.id.textView1);
         userName.setText(name);
 
-        ImageView profileImage=(ImageView) hview.findViewById(R.id.imageView);
+        rcinitiate = new RetrofitClass(this);
+        client = rcinitiate.createBuilder().create(SearchInterface.class);
+        rcinitiate.startLogging();
+
+        Call<List<NewsResponse>> call = client.getNews();
+        call.enqueue(new Callback<List<NewsResponse>>() {
+            @Override
+            public void onResponse(Call<List<NewsResponse>> call, Response<List<NewsResponse>> response) {
+
+                pb.setVisibility(View.GONE);
+                responses = response.body();
+                Bundle bundle = new Bundle();
+                bundle.putInt("size", responses.size());
+                for (int i = 0; i < responses.size(); i++) {
+                    String json = new Gson().toJson(responses.get(i));
+                    bundle.putString("List" + i, json);
+                }
+                MainFragment mainFragment = new MainFragment();
+                mainFragment.setArguments(bundle);
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.relative_layout_for_main_fragment, mainFragment, mainFragment.getTag());
+                //ft.addToBackStack("main");
+                ft.commit();
+
+            }
+
+            @Override
+            public void onFailure(Call<List<NewsResponse>> call, Throwable t) {
+
+            }
+        });
+        Log.i("Size112", String.valueOf(responses.size()));
+
+
+        ImageView profileImage = (ImageView) hview.findViewById(R.id.imageView);
         new DownloadImage(profileImage).execute(imageUrl);
 
-        Button logout=(Button) hview.findViewById(R.id.logout);
+        Button logout = (Button) hview.findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LoginManager.getInstance().logOut();
-                startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
             }
         });
-
-
-        MainFragment mainFragment=new MainFragment();
-        FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.relative_layout_for_main_fragment,mainFragment,mainFragment.getTag());
-        //ft.addToBackStack("main");
-        ft.commit();
 
 
 
 
     }
+
     @Override
-    public void onResume() { super.onResume();}
+    public void onResume() {
+        super.onResume();
+    }
 
 //    @Override
 //    public void onBackPressed() {
@@ -178,12 +225,11 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
 
-        }
-        else if (backPressedToExitOnce) {
+        } else if (backPressedToExitOnce) {
             super.onBackPressed();
         } else {
             this.backPressedToExitOnce = true;
-            toast = Toast.makeText(getApplicationContext(),"Press again to exit",Toast.LENGTH_SHORT);
+            toast = Toast.makeText(getApplicationContext(), "Press again to exit", Toast.LENGTH_SHORT);
             toast.show();//showToast("Press again to exit");
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
@@ -196,9 +242,11 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
+
     /**
      * Created to make sure that you toast doesn't show miltiple times, if user pressed back
      * button more than once.
+     *
      * @param message Message to show on toast.
      */
     private void showToast(String message) {
@@ -218,6 +266,7 @@ public class MainActivity extends AppCompatActivity
         // Showing toast finally
         this.toast.show();
     }
+
     /**
      * Kill the toast if showing. Supposed to call from onPause() of activity.
      * So that toast also get removed as activity goes to background, to improve
@@ -228,13 +277,12 @@ public class MainActivity extends AppCompatActivity
             this.toast.cancel();
         }
     }
+
     @Override
     protected void onPause() {
         killToast();
         super.onPause();
     }
-
-
 
 
 }

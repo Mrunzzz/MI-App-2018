@@ -33,6 +33,7 @@ public class EventListActivity extends AppCompatActivity {
             responses.add(new Gson().fromJson(responsejson,EventDetailResponse.class));
         }
 
+
         eventsAdapter=new EventsAdapter(responses);
         recyclerView.setAdapter(eventsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));

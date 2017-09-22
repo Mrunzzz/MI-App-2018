@@ -8,7 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.moodindigo.data.NewsResponse;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by owais on 30/07/17.
@@ -16,7 +19,7 @@ import java.util.ArrayList;
 
 public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.myViewHolder> {
 
-    private ArrayList<NewsCard> news;
+    private List<NewsResponse> news;
 
     public static class myViewHolder extends RecyclerView.ViewHolder{
         public TextView title, description;
@@ -29,8 +32,8 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.myView
         }
     }
 
-    public NewsCardAdapter(ArrayList<NewsCard> news1){
-        news = news1;
+    public NewsCardAdapter(List<NewsResponse> news){
+        this.news=news;
     }
 
     @Override
@@ -43,8 +46,8 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.myView
 
     @Override
     public void onBindViewHolder(myViewHolder holder, int position){
-        holder.title.setText(news.get(position).getTitleOfCard());
-        holder.description.setText(news.get(position).getDescriptionOfCard());
+        holder.title.setText(news.get(position).getName());
+        holder.description.setText(news.get(position).getDetails());
     }
 
     @Override
