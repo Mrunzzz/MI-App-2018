@@ -1,9 +1,11 @@
 package com.example.android.moodindigo.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -32,6 +34,7 @@ public class MainFragment extends Fragment {
 
     View view;
     ViewPager viewPager;
+    private FragmentActivity myContext;
 
     public MainFragment() {
         // Required empty public constructor
@@ -67,10 +70,17 @@ public class MainFragment extends Fragment {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
 
             }
         });
         return view;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        myContext = (FragmentActivity) context;
+        super.onAttach(context);
+
+    }
 }
