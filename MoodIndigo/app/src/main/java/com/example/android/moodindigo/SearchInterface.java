@@ -1,6 +1,7 @@
 package com.example.android.moodindigo;
 
 
+import com.example.android.moodindigo.data.EventsResponse;
 import com.example.android.moodindigo.data.RegistrationRequest;
 import com.example.android.moodindigo.data.RegistrationResponse;
 
@@ -31,6 +32,9 @@ public interface SearchInterface {
 
     @POST("user/create")
     Call<RegistrationResponse> fillRegistrationForm(@Body RegistrationRequest registrationRequest);
+
+    @GET("events")
+    Call<EventsResponse> getEvents();
 
 
 

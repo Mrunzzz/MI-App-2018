@@ -55,6 +55,10 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".RegistrationActivity" />
+        <activity android:name=".GenresActivity" />
+        <activity android:name=".EventListActivity"></activity>
+
         <!--added android:noHistory="true" to remove registration activity from backstack-->
         <activity android:name=".RegistrationActivity"
             android:noHistory="true">
@@ -78,6 +82,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity"/>
         </activity>
+
     </application>
 
 </manifest>
