@@ -24,10 +24,10 @@
             <!--android:id="@+id/nav_faq"-->
             <!--android:icon="@drawable/ic_menu_help"-->
             <!--android:title="F.A.Q." />-->
-        <item
-            android:id="@+id/nav_lookback"
-            android:icon="@drawable/ic_menu_lookback"
-            android:title="MI Lookback" />
+        <!--<item-->
+            <!--android:id="@+id/nav_lookback"-->
+            <!--android:icon="@drawable/ic_menu_lookback"-->
+            <!--android:title="MI Lookback" />-->
         <item
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_menu_info_details"

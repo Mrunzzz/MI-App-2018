@@ -198,16 +198,6 @@ public class MainActivity extends AppCompatActivity
                 }
             }, 120);
 
-        } else if (id == R.id.nav_lookback) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Intent intent = new Intent(getApplicationContext(), MILookbackActivity.class);
-                    startActivity(intent);
-                }
-            }, 120);
-
-
         }
 
 
